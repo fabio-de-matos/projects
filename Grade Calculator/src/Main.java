@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Main {
 
@@ -8,6 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
 
+        /*adding data*/
         ArrayList<Student> studentArrayList = new ArrayList<>();
         studentArrayList.add(new Student("Joao", new double[]{80, 50, 40, 20}, new double[]{75, 75}, new double[]{78.20, 77.20}));
         studentArrayList.add(new Student("Maria", new double[]{92, 96, 94, 90}, new double[]{90, 90}, new double[]{97.90, 98.72}));
@@ -16,22 +15,32 @@ public class Main {
 
         ArrayList<Double> classStudentsFinalScoreList = new ArrayList<>();
 
+
+
         for (Student student : studentArrayList) {
+            /*set assignment, test and lab average scores from each students*/
+            student.setAssignmentsScoresAverage();
+            student.setTestsScoresAverage();
+            student.setLabsScoresAverage();
+            /*set final scores and final letter grade from each students*/
             student.setFinalScore();
-            student.setFinalGrade();
+            student.setFinalLetterGrade();
+            /*show student data on console*/
             System.out.println("Student name: " + student.getStudentName());
-            System.out.println("Assignments average score: " + Arrays.stream(student.getAssignmentsScores()).sum() / student.getAssignmentsScores().length);
-            System.out.println("Tests average score: " + Arrays.stream(student.getTestsScores()).sum() / student.getTestsScores().length);
-            System.out.println("Labs average score: " + Arrays.stream(student.getLabsScores()).sum() / student.getLabsScores().length);
+            System.out.println("Assignments average score: " + student.getAssignmentsScoresAverage());
+            System.out.println("Tests average score: " + student.getTestsScoresAverage());
+            System.out.println("Labs average score: " + student.getLabsScoresAverage());
             System.out.println("Final score: " + student.getFinalScore());
-            System.out.println("Final grade: " + student.getFinalGrade());
+            System.out.println("Final grade: " + student.getFinalLetterGrade());
             System.out.println("------------------------------------------");
             classStudentsFinalScoreList.add(student.getFinalScore());
         }
+        /*get average score and letter grade from class*/
         for (Double studentScore : classStudentsFinalScoreList) {
             classScoreSum += studentScore;
         }
         double classScoreAverage = classScoreSum / classStudentsFinalScoreList.size();
+        /*show class data on console*/
         System.out.println("Class final score: " + String.format("%.2f", classScoreAverage));
         System.out.println("Class final grade: " + Rules.getGrade(classScoreAverage));
         System.out.println("------------------------------------------");

@@ -6,17 +6,20 @@ public class Student {
     double[] assignmentsScores;
     double[] testsScores;
     double[] labsScores;
-    double finalScores;
-    String finalGrade;
+    double finalScore;
+    String finalLetterGrade;
+    double assignmentsScoresAverage;
+    double testsScoresAverage;
+    double labsScoresAverage;
 
     public Student(String studentName, double[] assignmentsScores, double[] testsScores, double[] labsScores) throws IllegalArgumentException {
         this.studentName = studentName;
-        if (Rules.isCorrectTotalOfGradesProvided(assignmentsScores.length,testsScores.length,labsScores.length)){
+        if (Rules.isCorrectTotalOfGradesProvided(assignmentsScores.length, testsScores.length, labsScores.length)) {
             this.assignmentsScores = assignmentsScores;
             this.testsScores = testsScores;
             this.labsScores = labsScores;
-        }else {
-            throw new IllegalStateException("ERROR: Check the total of grades provided for assignments, tests and lab-works.");
+        } else {
+            throw new IllegalStateException("ERROR: Check total of grades provided for assignments, tests and lab-works.");
         }
     }
 
@@ -36,22 +39,46 @@ public class Student {
         return labsScores;
     }
 
+    public void setAssignmentsScoresAverage() {
+        this.assignmentsScoresAverage = Rules.getAverage(getAssignmentsScores());
+    }
+
+    public double getAssignmentsScoresAverage() {
+        return assignmentsScoresAverage;
+    }
+
+    public void setTestsScoresAverage() {
+        this.testsScoresAverage = Rules.getAverage(getTestsScores());
+    }
+
+    public double getTestsScoresAverage() {
+        return testsScoresAverage;
+    }
+
+    public void setLabsScoresAverage() {
+        this.labsScoresAverage = Rules.getAverage(getLabsScores());
+    }
+
+    public double getLabsScoresAverage() {
+        return labsScoresAverage;
+    }
+
     public void setFinalScore() {
-        this.finalScores =
+        this.finalScore =
                 (Arrays.stream(getAssignmentsScores()).sum() / getAssignmentsScores().length) * 0.10
                         + (Arrays.stream(getTestsScores()).sum() / getTestsScores().length) * 0.70
                         + (Arrays.stream(getLabsScores()).sum() / getLabsScores().length) * 0.20;
     }
 
-    public double getFinalScore(){
-        return finalScores;
+    public double getFinalScore() {
+        return finalScore;
     }
 
-    public void setFinalGrade() {
-        this.finalGrade = Rules.getGrade(getFinalScore());
+    public void setFinalLetterGrade() {
+        this.finalLetterGrade = Rules.getGrade(getFinalScore());
     }
 
-    public String getFinalGrade() {
-        return finalGrade;
+    public String getFinalLetterGrade() {
+        return finalLetterGrade;
     }
 }
